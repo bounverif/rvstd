@@ -18,7 +18,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     python-is-python3 \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
-RUN git clone -j$(nproc) --recursive --depth 1 --branch boost-1.81.0 https://github.com/boostorg/boost.git /tmp/boost \
+RUN git clone -j$(nproc) --recursive --depth 1 --branch boost-1.82.0.beta1 https://github.com/boostorg/boost.git /tmp/boost \
     && cd /tmp/boost \
     && ./bootstrap.sh --prefix=/usr/local --without-libraries=python \
     && ./b2 -j$(nproc) install \
