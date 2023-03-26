@@ -38,6 +38,10 @@ struct instruction {
   attributes_type data_;
 };
 
+// Comparison operators
+bool operator==(instruction const& lhs, instruction const& rhs) noexcept;
+bool operator!=(instruction const& lhs, instruction const& rhs) noexcept;
+
 }  // namespace rvstd
 
 namespace std {

@@ -1,6 +1,6 @@
 #include "rvstd/instruction.hpp"
 
-#include <boost/container_hash/hash_fwd.hpp>
+#include <boost/functional/hash.hpp>
 
 namespace rvstd {
 
@@ -17,6 +17,17 @@ auto instruction::arguments() const -> arguments_type const&
 auto instruction::attributes() const -> attributes_type const&
 {
   return data_;
+}
+
+// Comparison operators
+bool operator==(instruction const& lhs, instruction const& rhs) noexcept
+{
+  return lhs.code() == rhs.code() && lhs.arguments() == rhs.arguments() &&
+         lhs.attributes() == rhs.attributes();
+}
+bool operator!=(instruction const& lhs, instruction const& rhs) noexcept
+{
+  return !(lhs == rhs);
 }
 
 }  // namespace rvstd
