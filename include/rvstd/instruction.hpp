@@ -18,10 +18,7 @@ struct instruction {
   using type = instruction;
 
   instruction(
-    instruction_type code, arguments_type args, attributes_type data = nullptr)
-      : code_(code), args_(std::move(args)), data_(std::move(data))
-  {
-  }
+    instruction_type code, arguments_type args, attributes_type data = nullptr);
 
   RVSTD_NODISCARD
   auto code() const -> instruction_type;
