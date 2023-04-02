@@ -26,7 +26,8 @@
         ],
         "gcovViewer.buildDirectories": ["/tmp/rvstd/build"],
         "gcovViewer.highlightMissedLines": true
-      }
+      },
+      "recommendations": ["github.vscode-github-actions", "github.copilot"]
     }
   },
   "postCreateCommand": "make configure",

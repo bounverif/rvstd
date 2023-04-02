@@ -28,17 +28,15 @@ FixNamespaceComments: true
 IncludeBlocks: Regroup
 IncludeCategories:
   - Regex: '^"(rvstd)/'
-    Priority: 2
-    SortPriority: 2
+    Priority: 1
     CaseSensitive: true
   - Regex: '^((<|")(boost|catch2)/)'
-    Priority: 3
+    Priority: 2
     CaseSensitive: true
-  - Regex: "<[[:alnum:].]+>"
-    Priority: 4
+  - Regex: "<[a-zA-Z][a-zA-Z0-9_]+>"
+    Priority: 3
   - Regex: ".*"
-    Priority: 1
-    SortPriority: 0
+    Priority: 4
 
 SpaceAfterTemplateKeyword: false
 SpaceBeforeAssignmentOperators: true

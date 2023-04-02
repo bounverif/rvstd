@@ -19,8 +19,11 @@ purge:
 	rm -rf $(BUILD_DIRECTORY)
 	$(MAKE) configure
 
-test:
+test: build
 	ctest --test-dir $(BUILD_DIRECTORY) --output-on-failure
+
+benchmark: configure build
+	$(BUILD_DIRECTORY)/tests/rvstd_benchmark
 
 cbuild:
 	DOCKER_BUILDKIT=1 docker build . \
@@ -40,4 +43,4 @@ coverage:
 	ln -sf $(BUILD_DIRECTORY)/compile_commands.json $(WORKSPACE)/compile_commands.json
 	cmake --build $(BUILD_DIRECTORY)
 	ctest --test-dir $(BUILD_DIRECTORY)
-	gcovr -r $(WORKSPACE)/src $(BUILD_DIRECTORY) --print-summary
+	gcovr $(BUILD_DIRECTORY) -r $(WORKSPACE) -e $(WORKSPACE)/tests --print-summary
