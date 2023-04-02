@@ -7,6 +7,7 @@ add_executable(
   rvstd_tests
     instruction.test.cpp
     unique_identifier.test.cpp
+    boost_json_ext.test.cpp
 )
 
 target_link_libraries(

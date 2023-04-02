@@ -22,6 +22,7 @@ TARGET_INCLUDE_DIRECTORIES(
 TARGET_SOURCES(
   rvstd
   PRIVATE
+    "src/boost_json_ext.cpp"
     "src/unique_identifier.cpp"
     "src/instruction.cpp"
 )
