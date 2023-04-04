@@ -15,14 +15,50 @@ TEST_CASE(  // NOLINT(readability-function-cognitive-complexity)
     REQUIRE(unique_identifier("bounverif") == unique_identifier("bounverif"));
   }
 
+  SECTION("Construction from UUID String")
+  {
+    auto idx = unique_identifier("bounverif");
+    auto str = idx.to_string();
+
+    REQUIRE(idx == unique_identifier::from_string(str));
+  }
+
+  SECTION("String conversion")
+  {
+    auto idx = unique_identifier("bounverif");
+    auto str = idx.to_string();
+  }
+
+  SECTION("String conversion (const)")
+  {
+    const auto idx = unique_identifier("bounverif");
+    auto str = idx.to_string();
+  }
+
+  SECTION("Equality")
+  {
+    auto src1 = unique_identifier("bounverif");
+    auto src2 = unique_identifier("bounverif");
+    auto src3 = unique_identifier("labs");
+
+    REQUIRE(src1 == src2);
+    REQUIRE(src1 != src3);
+  }
+
   SECTION("Relations")
   {
-    auto id1 = unique_identifier("bounverif");
-    auto id2 = unique_identifier("bounverif");
-    auto id3 = unique_identifier("labs");
+    auto src1 = unique_identifier("bounverif");
+    auto src2 = unique_identifier("bounverif");
+    auto src3 = unique_identifier("labs");
 
-    REQUIRE(id1 == id2);
-    REQUIRE(id1 != id3);
+    REQUIRE(!(src1 < src2));
+    REQUIRE(!(src1 > src3));
+
+    REQUIRE(src1 < src3);
+    REQUIRE(src1 <= src2);
+    REQUIRE(src1 <= src3);
+    REQUIRE(src1 >= src2);
+    REQUIRE(src3 >= src1);
   }
 
   SECTION("Hashing")
@@ -37,11 +73,5 @@ TEST_CASE(  // NOLINT(readability-function-cognitive-complexity)
     REQUIRE(
       std::hash<unique_identifier>{}(src1) !=
       std::hash<unique_identifier>{}(src3));
-  }
-
-  SECTION("String conversion")
-  {
-    auto idx = unique_identifier("bounverif");
-    auto str = idx.to_string();
   }
 }
