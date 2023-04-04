@@ -4,6 +4,12 @@
 
 namespace rvstd {
 
+instruction::instruction(
+  instruction_type code, arguments_type args, attributes_type data)
+    : code_(code), args_(std::move(args)), data_(std::move(data))
+{
+}
+
 auto instruction::code() const -> unique_identifier
 {
   return code_;
