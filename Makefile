@@ -23,7 +23,7 @@ test: build
 	ctest --test-dir $(BUILD_DIRECTORY) --output-on-failure
 
 benchmark: configure build
-	$(BUILD_DIRECTORY)/tests/rvstd_benchmark
+	$(BUILD_DIRECTORY)/tests/rvstd_benchmarks
 
 cbuild:
 	DOCKER_BUILDKIT=1 docker build . \

@@ -24,6 +24,7 @@ TARGET_SOURCES(
   PRIVATE
     "src/boost_json_ext.cpp"
     "src/unique_identifier.cpp"
+    "src/options.cpp"
     "src/instruction.cpp"
 )
 TARGET_LINK_LIBRARIES(
