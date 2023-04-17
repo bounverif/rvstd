@@ -13,7 +13,7 @@
         "llvm-vs-code-extensions.vscode-clangd",
         "cheshirekow.cmake-format",
         "esbenp.prettier-vscode",
-        "JacquesLucke.gcov-viewer"
+        "ms-azuretools.vscode-docker"
       ],
       "settings": {
         "clangd.arguments": [
