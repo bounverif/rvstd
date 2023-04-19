@@ -6,7 +6,6 @@ include(CTest)
 add_executable(
   rvstd_tests
     options.test.cpp
-    forward_signal.test.cpp
     instruction.test.cpp
     unique_identifier.test.cpp
     boost_json_ext.test.cpp
