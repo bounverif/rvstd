@@ -9,12 +9,15 @@ SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 SET(CMAKE_CXX_FLAGS_COVERAGE "-O0 --coverage")
 
 ADD_LIBRARY(rvstd)
+ADD_LIBRARY(rytest)
+
 FIND_PACKAGE(
   Boost 1.82
   COMPONENTS json
   REQUIRED
 )
 
+# rvstd-core
 TARGET_INCLUDE_DIRECTORIES(
   rvstd PUBLIC $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
                $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>/include
@@ -22,10 +25,9 @@ TARGET_INCLUDE_DIRECTORIES(
 TARGET_SOURCES(
   rvstd
   PRIVATE
-    "src/boost_json_ext.cpp"
-    "src/unique_identifier.cpp"
-    "src/options.cpp"
-    "src/instruction.cpp"
+    "src/rvstd/boost_json_ext.cpp"
+    "src/rvstd/unique_identifier.cpp"
+    "src/rvstd/options.cpp"
 )
 TARGET_LINK_LIBRARIES(
   rvstd
@@ -38,6 +40,27 @@ SET_TARGET_PROPERTIES(
     CMAKE_CXX_FLAGS_COVERAGE "-O0 --coverage"
 )
 
+# rytest-core
+TARGET_INCLUDE_DIRECTORIES(
+  rytest PUBLIC $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+                $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>/include
+)
+TARGET_SOURCES(
+  rytest
+  PRIVATE
+    "src/rytest/instruction.cpp"
+)
+TARGET_LINK_LIBRARIES(
+  rytest
+  PUBLIC
+    rvstd
+    Boost::json
+)
+SET_TARGET_PROPERTIES(
+  rytest
+  PROPERTIES
+    CMAKE_CXX_FLAGS_COVERAGE "-O0 --coverage"
+)
 
 IF(ENABLE_TESTS)
   ADD_SUBDIRECTORY(tests)

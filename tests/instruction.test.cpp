@@ -1,4 +1,4 @@
-#include "rvstd/instruction.hpp"
+#include "rytest/instruction.hpp"
 
 #include <catch2/catch_test_macros.hpp>
 
