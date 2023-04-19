@@ -10,8 +10,8 @@ namespace rvstd {
 using i64 = std::int64_t;
 using u64 = std::uint64_t;
 using f64 = std::double_t;
-using string_view = std::string_view;
 
+using string_view = boost::json::string_view;
 using string = boost::json::string;
 using array = boost::json::array;
 using object = boost::json::object;
