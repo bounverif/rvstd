@@ -13,9 +13,9 @@ using f64 = std::double_t;
 
 using string_view = boost::json::string_view;
 using string = boost::json::string;
-using array = boost::json::array;
-using object = boost::json::object;
-using json = boost::json::value;
+using json_array = boost::json::array;
+using json_object = boost::json::object;
+using json_value = boost::json::value;
 using json_ref = boost::json::value_ref;
 
 }  // namespace rvstd
