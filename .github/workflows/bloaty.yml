@@ -1,0 +1,43 @@
+name: Bloaty action
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  bloaty-job:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/bounverif/boostdev:1.82.0
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.github_token }}
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Configure and build this project
+        uses: threeal/cmake-action@latest
+        with:
+          build-dir: build
+          args: -DCMAKE_BUILD_TYPE=RELEASE
+
+      - name: Run Bloaty McBloatface on an ELF file
+        uses: carlosperate/bloaty-action@v1.1.0
+        id: bloaty-action
+        with:
+          bloaty-args: build/librvstd.a -d armembers
+
+      - name: Add a PR comment with the bloaty output
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '## Bloaty output\n```\n${{ steps.bloaty-action.outputs.bloaty-output-encoded }}```\n'
+            })
