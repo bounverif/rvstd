@@ -6,16 +6,11 @@ on:
   pull_request:
   workflow_dispatch:
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: bounverif/boostdev
-  VERSION: 1.82.0
-
 jobs:
   bloaty-job:
     runs-on: ubuntu-latest
     container:
-      image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+      image: ghcr.io/bounverif/boostdev:1.82.0
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.github_token }}
