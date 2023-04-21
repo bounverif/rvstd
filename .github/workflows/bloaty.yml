@@ -22,10 +22,10 @@ jobs:
       - name: Configure and build this project
         uses: threeal/cmake-action@latest
         with:
-          build-dir: /tmp/rvstd/build
+          build-dir: build
 
       - name: bloaty-action
         uses: carlosperate/bloaty-action@v1.1.0
         with:
-          bloaty-args: /tmp/rvstd/build/librvstd.a -d armembers
+          bloaty-args: build/librvstd.a -d armembers
           output-to-summary: true
