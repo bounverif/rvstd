@@ -9,7 +9,14 @@ on:
 jobs:
   bloaty-job:
     runs-on: ubuntu-latest
-    container: ghcr.io/bounverif/develop
+    permissions:
+      packages: read
+    container:
+      image: ghcr.io/bounverif/develop
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.github_token }}
+
     steps:
       - name: Check out the repository
         uses: actions/checkout@v3.3.0
