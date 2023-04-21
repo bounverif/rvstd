@@ -6,19 +6,23 @@ on:
   pull_request:
   workflow_dispatch:
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: bounverif/boostdev
+  VERSION: 1.82.0
+
 jobs:
   bloaty-job:
     runs-on: ubuntu-latest
-    permissions: read-all
     container:
-      image: ghcr.io/bounverif/develop
+      image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.github_token }}
 
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3
 
       - name: Configure and build this project
         uses: threeal/cmake-action@latest
