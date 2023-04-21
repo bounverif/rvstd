@@ -1,15 +1,16 @@
-name: Build devcontainer image
+name: Build Boost developer image
 
 on:
   workflow_dispatch:
   push:
     paths:
-      - .devcontainer/Dockerfile
-      - .github/workflows/devcontainer.yml # Self-trigger
+      - .devcontainer/boostdev.dockerfile
+      - .github/workflows/boostdev.yml # Self-trigger
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: bounverif/develop
+  IMAGE_NAME: bounverif/boostdev
+  VERSION: 1.82.0
 
 jobs:
   build-and-push-image:
@@ -36,8 +37,9 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          build-args: "VERSION=${{ env.VERSION }}"
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
           push: true
-          file: .devcontainer/Dockerfile
+          file: .devcontainer/boostdev.dockerfile
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           cache-to: type=inline
