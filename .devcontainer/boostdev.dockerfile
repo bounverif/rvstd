@@ -28,12 +28,4 @@ RUN git clone --depth 1 --branch v3.3.2 https://github.com/catchorg/Catch2.git /
   && cmake --build /tmp/catch2/build/ --target install -j$(nproc) \
   && rm -rf /tmp/catch2
 
-RUN git clone --depth 1 --branch 3.2.7 https://github.com/taocpp/PEGTL.git /tmp/pegtl \
-  && mkdir -p /tmp/pegtl/build && cd /tmp/pegtl/build \
-  && cmake -S/tmp/pegtl -B/tmp/pegtl/build \
-  -DPEGTL_BUILD_TESTS=OFF \
-  -DPEGTL_BUILD_EXAMPLES=OFF \
-  -DPEGTL_INSTALL_CMAKE_DIR=/usr/local/lib/cmake/pegtl \
-  && cmake --build /tmp/pegtl/build/ --target install -j$(nproc) \
-  && rm -rf /tmp/pegtl
 
