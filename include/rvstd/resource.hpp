@@ -29,6 +29,10 @@ struct resource {
   RVSTD_NODISCARD
   auto attributes() const -> attributes_type const&;
 
+  // relations
+  friend bool operator==(resource const& lhs, resource const& rhs) noexcept;
+  friend bool operator!=(resource const& lhs, resource const& rhs) noexcept;
+
   // hash
   friend auto hash_value(resource const& src) -> std::size_t;
 
@@ -37,10 +41,6 @@ struct resource {
   relations_type rels_;
   attributes_type data_;
 };
-
-// Comparison operators
-bool operator==(resource const& lhs, resource const& rhs) noexcept;
-bool operator!=(resource const& lhs, resource const& rhs) noexcept;
 
 }  // namespace rvstd
 

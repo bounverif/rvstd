@@ -39,8 +39,8 @@ auto hash_value(resource const& src) -> std::size_t
 // Comparison operators
 bool operator==(resource const& lhs, resource const& rhs) noexcept
 {
-  return lhs.code() == rhs.code() && lhs.relations() == rhs.relations() &&
-         lhs.attributes() == rhs.attributes();
+  return lhs.code_ == rhs.code_ && lhs.rels_ == rhs.rels_ &&
+         lhs.data_ == rhs.data_;
 }
 bool operator!=(resource const& lhs, resource const& rhs) noexcept
 {
