@@ -41,5 +41,5 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
           push: true
           file: .devcontainer/boostdev.dockerfile
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          cache-to: type=inline
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
