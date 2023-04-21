@@ -40,16 +40,15 @@ struct unique_identifier {
   friend bool operator!=(
     unique_identifier const& lhs, unique_identifier const& rhs) noexcept;
 
+  // hash
+  friend auto hash_value(unique_identifier const& obj) -> std::size_t;
+
  private:
   value_type value_;
 };
 
 }  // namespace rvstd
 
-template<>
-struct std::hash<::boost::uuids::uuid> {
-  std::size_t operator()(::boost::uuids::uuid const& obj) const noexcept;
-};
 template<>
 struct std::hash<rvstd::unique_identifier> {
   std::size_t operator()(::rvstd::unique_identifier const& obj) const noexcept;

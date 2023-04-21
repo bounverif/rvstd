@@ -113,16 +113,21 @@ bool operator!=(
   return not(lhs == rhs);
 }
 
+auto hash_value(unique_identifier const& obj) -> std::size_t
+{
+  return ::boost::hash<::boost::uuids::uuid>()(obj.value_);
+}
+
 }  // namespace rvstd
 
 auto std::hash<::rvstd::unique_identifier>::operator()(
   ::rvstd::unique_identifier const& obj) const noexcept -> std::size_t
 {
-  return std::hash<::rvstd::unique_identifier::value_type>()(obj.value());
+  return ::boost::hash<::rvstd::unique_identifier>()(obj);
 }
 
-auto std::hash<boost::uuids::uuid>::operator()(
-  boost::uuids::uuid const& obj) const noexcept -> std::size_t
-{
-  return boost::hash<boost::uuids::uuid>()(obj);
-}
+// auto std::hash<::boost::uuids::uuid>::operator()(
+//   ::boost::uuids::uuid const& obj) const noexcept -> std::size_t
+// {
+//   return ::boost::hash<::boost::uuids::uuid>()(obj);
+// }
