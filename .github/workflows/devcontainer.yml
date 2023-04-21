@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - ./devcontainer/Dockerfile
+      - .devcontainer/Dockerfile
       - .github/workflows/devcontainer.yml # Self-trigger
 
 env:
