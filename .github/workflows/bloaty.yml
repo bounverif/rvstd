@@ -24,8 +24,19 @@ jobs:
         with:
           build-dir: build
 
-      - name: bloaty-action
+      - name: Run Bloaty McBloatface on an ELF file
         uses: carlosperate/bloaty-action@v1.1.0
+        id: bloaty-action
         with:
           bloaty-args: build/librvstd.a -d armembers
-          output-to-summary: true
+
+      - name: Add a PR comment with the bloaty output
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '## Bloaty output\n```\n${{ steps.bloaty-action.outputs.bloaty-output-encoded }}```\n'
+            })
