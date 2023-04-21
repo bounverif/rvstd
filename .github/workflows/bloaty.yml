@@ -7,8 +7,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  ubuntu-build:
+  bloaty-job:
     runs-on: ubuntu-latest
+    container: ghcr.io/bounverif/develop
     steps:
       - name: Check out the repository
         uses: actions/checkout@v3.3.0
@@ -16,7 +17,6 @@ jobs:
       - name: Configure and build this project
         uses: threeal/cmake-action@latest
         with:
-          source-dir: ./
           build-dir: /tmp/rvstd/build
 
       - name: bloaty-action
