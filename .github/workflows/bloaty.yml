@@ -23,6 +23,7 @@ jobs:
         uses: threeal/cmake-action@latest
         with:
           build-dir: build
+          args: -DCMAKE_BUILD_TYPE=RELEASE
 
       - name: Run Bloaty McBloatface on an ELF file
         uses: carlosperate/bloaty-action@v1.1.0
