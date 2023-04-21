@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: bounverif/dev
+  IMAGE_NAME: bounverif/develop
 
 jobs:
   build-and-push-image:
@@ -38,5 +38,6 @@ jobs:
           context: .
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           push: true
+          file: .devcontainer/Dockerfile
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           cache-to: type=inline
