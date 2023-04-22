@@ -1,9 +1,9 @@
-name: Bloaty action
+name: Bloaty Action
 
 on:
-  push:
-    branches: [main]
   pull_request:
+    paths:
+      - src/**
   workflow_dispatch:
 
 jobs:
@@ -39,5 +39,6 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '## Bloaty output\n```\n${{ steps.bloaty-action.outputs.bloaty-output-encoded }}```\n'
+              body: '```\n${{ steps.bloaty-action.outputs.bloaty-output-encoded }}```\n'
             })
+        if: github.event_name == 'pull_request'
