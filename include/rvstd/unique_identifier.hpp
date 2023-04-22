@@ -4,8 +4,6 @@
 #include "rvstd/config.hpp"
 #include "rvstd/types.hpp"
 
-#include <boost/uuid/name_generator_sha1.hpp>
-#include <boost/uuid/random_generator.hpp>
 #include <boost/uuid/uuid.hpp>
 
 namespace rvstd {
