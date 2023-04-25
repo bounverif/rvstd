@@ -15,6 +15,25 @@ TEST_CASE(  // NOLINT(readability-function-cognitive-complexity)
     REQUIRE(unique_identifier("bounverif") == unique_identifier("bounverif"));
   }
 
+  SECTION("Null Constructor")
+  {
+    std::string null_uuid = "00000000-0000-0000-0000-000000000000";
+
+    REQUIRE(unique_identifier::null().empty() == true);
+    REQUIRE(unique_identifier::null().to_string() == null_uuid);
+    REQUIRE(
+      unique_identifier::null() == unique_identifier::from_string(null_uuid));
+    REQUIRE(
+      unique_identifier::null().value() ==
+      unique_identifier::from_string(null_uuid).value());
+    REQUIRE(unique_identifier::null() == unique_identifier::null());
+  }
+
+  SECTION("Getter")
+  {
+    std::string null_uuid = "00000000-0000-0000-0000-000000000000";
+  }
+
   SECTION("Construction from UUID String")
   {
     auto idx = unique_identifier("bounverif");

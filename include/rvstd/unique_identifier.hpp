@@ -17,11 +17,18 @@ struct unique_identifier {
   unique_identifier(value_type value);
 
   RVSTD_NODISCARD
+  bool empty() const noexcept;
+
+  RVSTD_NODISCARD
   auto value() const noexcept -> value_type;
 
   RVSTD_NODISCARD
   auto to_string() const -> string;
 
+  // null unique identifier
+  static auto null() -> unique_identifier;
+
+  // unique identifier from string
   static auto from_string(string_view str) -> unique_identifier;
 
   // relations

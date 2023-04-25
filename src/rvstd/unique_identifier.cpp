@@ -3,7 +3,9 @@
 #include <boost/functional/hash.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/name_generator_sha1.hpp>
+#include <boost/uuid/nil_generator.hpp>
 #include <boost/uuid/random_generator.hpp>
+#include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 namespace rvstd {
@@ -70,6 +72,11 @@ unique_identifier::unique_identifier(string_view name)
 }
 unique_identifier::unique_identifier(value_type value) : value_(value) {}
 
+bool unique_identifier::empty() const noexcept
+{
+  return value_.is_nil();
+}
+
 auto unique_identifier::value() const noexcept -> value_type
 {
   return value_;
@@ -77,6 +84,10 @@ auto unique_identifier::value() const noexcept -> value_type
 auto unique_identifier::to_string() const -> string
 {
   return detail::uuids::to_string(value_).c_str();
+}
+auto unique_identifier::null() -> unique_identifier
+{
+  return boost::uuids::nil_uuid();
 }
 auto unique_identifier::from_string(string_view str) -> unique_identifier
 {
