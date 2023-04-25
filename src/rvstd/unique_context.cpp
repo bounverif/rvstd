@@ -57,15 +57,6 @@ auto unique_context::emplace(resource_identifier key, resource&& src)
   return {};
 }
 
-auto unique_context::add(
-  resource_type code,
-  resource_relations_type rels,
-  resource_attributes_type data) -> resource_identifier
-{
-  return this->emplace(
-    resource_identifier(), resource(code, std::move(rels), std::move(data)));
-}
-
 // template<typename... Args>
 // auto unique_context::emplace(identifier_type key, Args&&... args)
 //   -> std::pair<const_iterator, bool>

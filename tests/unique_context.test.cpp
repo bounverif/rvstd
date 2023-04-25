@@ -28,6 +28,4 @@ TEST_CASE("Unique Context", "core")  // NOLINT
 
     REQUIRE(ctx.size() == 1);
   }
-
-  SECTION("Add") {}
 }

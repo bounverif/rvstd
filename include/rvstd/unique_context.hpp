@@ -49,25 +49,9 @@ struct unique_context {
   RVSTD_NODISCARD
   auto find(string_view key) const -> const_iterator;
 
-  auto add(
-    resource_identifier code,
-    resource_relations_type rels,
-    resource_attributes_type data = nullptr) -> resource_identifier;
-
   auto emplace(resource_identifier key, resource const& src)
     -> resource_identifier;
   auto emplace(resource_identifier key, resource&& src) -> resource_identifier;
-
-  // template<
-  //   typename... Args,
-  //   typename Enable =
-  //     typename std::enable_if_t<std::is_constructible_v<resource, Args...>>>
-  // auto emplace(identifier_type key, Args&&... args)
-  //   -> std::pair<const_iterator, bool>;
-
-  // template<typename... Args>
-  // auto emplace(identifier_type key, Args&&... args)
-  //   -> std::pair<const_iterator, bool>;
 
  private:
   boost::container::flat_map<string, resource_identifier> aliases_;
