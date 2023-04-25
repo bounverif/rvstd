@@ -32,23 +32,38 @@ auto unique_context::find(string_view key) const -> const_iterator
   }
   return find(p->second);
 }
-auto unique_context::find(identifier_type key) const -> const_iterator
+auto unique_context::find(resource_identifier key) const -> const_iterator
 {
   return table_.find(key);
 }
 
-auto unique_context::emplace(identifier_type key, resource_type const& src)
-  -> std::pair<const_iterator, bool>
+auto unique_context::emplace(resource_identifier key, resource const& src)
+  -> resource_identifier
 {
-  // const auto src = resource_type(std::forward<Args>(args)...);
-  return table_.emplace(key, src);
+  const auto p = table_.emplace(key, src);
+  if(p.second) {
+    return key;
+  }
+  return {};
 }
 
-auto unique_context::emplace(identifier_type key, resource_type&& src)
-  -> std::pair<const_iterator, bool>
+auto unique_context::emplace(resource_identifier key, resource&& src)
+  -> resource_identifier
 {
-  // const auto src = resource_type(std::forward<Args>(args)...);
-  return table_.emplace(key, std::move(src));
+  const auto p = table_.emplace(key, std::move(src));
+  if(p.second) {
+    return key;
+  }
+  return {};
+}
+
+auto unique_context::add(
+  resource_type code,
+  resource_relations_type rels,
+  resource_attributes_type data) -> resource_identifier
+{
+  return this->emplace(
+    resource_identifier(), resource(code, std::move(rels), std::move(data)));
 }
 
 // template<typename... Args>

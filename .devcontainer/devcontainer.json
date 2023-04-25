@@ -27,7 +27,9 @@
           "--all-scopes-completion"
         ],
         "gcovViewer.buildDirectories": ["/tmp/rvstd/build"],
-        "gcovViewer.highlightMissedLines": true
+        "gcovViewer.highlightMissedLines": true,
+        "editor.formatOnSave": true,
+        "editor.formatOnPaste": true
       },
       "recommendations": ["github.vscode-github-actions", "github.copilot"]
     }

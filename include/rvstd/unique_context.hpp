@@ -13,9 +13,12 @@ namespace rvstd {
  * This is a container adapter
  */
 struct unique_context {
-  using identifier_type = unique_identifier;
-  using resource_type = resource;
-  using table_type = boost::container::flat_map<identifier_type, resource_type>;
+  using resource_type = resource::resource_type;
+  using resource_identifier = resource::identifier_type;
+  using resource_relations_type = resource::relations_type;
+  using resource_attributes_type = resource::attributes_type;
+
+  using table_type = boost::container::flat_map<resource_identifier, resource>;
 
   using iterator = table_type::const_iterator;
   using const_iterator = table_type::const_iterator;
@@ -41,15 +44,19 @@ struct unique_context {
   bool empty() const noexcept;
 
   RVSTD_NODISCARD
-  auto find(identifier_type key) const -> const_iterator;
+  auto find(resource_identifier key) const -> const_iterator;
 
   RVSTD_NODISCARD
   auto find(string_view key) const -> const_iterator;
 
-  auto emplace(identifier_type key, resource_type const& src)
-    -> std::pair<const_iterator, bool>;
-  auto emplace(identifier_type key, resource_type&& src)
-    -> std::pair<const_iterator, bool>;
+  auto add(
+    resource_identifier code,
+    resource_relations_type rels,
+    resource_attributes_type data = nullptr) -> resource_identifier;
+
+  auto emplace(resource_identifier key, resource const& src)
+    -> resource_identifier;
+  auto emplace(resource_identifier key, resource&& src) -> resource_identifier;
 
   // template<
   //   typename... Args,
@@ -63,9 +70,9 @@ struct unique_context {
   //   -> std::pair<const_iterator, bool>;
 
  private:
-  boost::container::flat_map<string, identifier_type> aliases_;
-  boost::container::flat_map<size_type, identifier_type> hashes_;
-  boost::container::flat_map<identifier_type, resource_type> table_;
+  boost::container::flat_map<string, resource_identifier> aliases_;
+  boost::container::flat_map<size_type, resource_identifier> hashes_;
+  boost::container::flat_map<resource_identifier, resource> table_;
 };
 
 }  // namespace rvstd
