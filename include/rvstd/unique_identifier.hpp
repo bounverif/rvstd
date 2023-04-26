@@ -25,9 +25,6 @@ struct unique_identifier {
   RVSTD_NODISCARD
   auto to_string() const -> string;
 
-  // null unique identifier
-  static auto null() -> unique_identifier;
-
   // unique identifier from string
   static auto from_string(string_view str) -> unique_identifier;
 
@@ -51,6 +48,8 @@ struct unique_identifier {
  private:
   value_type value_;
 };
+
+auto nil_identifier() -> unique_identifier;
 
 }  // namespace rvstd
 

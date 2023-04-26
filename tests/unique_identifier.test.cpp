@@ -17,21 +17,15 @@ TEST_CASE(  // NOLINT(readability-function-cognitive-complexity)
 
   SECTION("Null Constructor")
   {
-    std::string null_uuid = "00000000-0000-0000-0000-000000000000";
+    std::string nil_uuid = "00000000-0000-0000-0000-000000000000";
 
-    REQUIRE(unique_identifier::null().empty() == true);
-    REQUIRE(unique_identifier::null().to_string() == null_uuid);
+    REQUIRE(nil_identifier().empty() == true);
+    REQUIRE(nil_identifier().to_string() == nil_uuid);
+    REQUIRE(nil_identifier() == unique_identifier::from_string(nil_uuid));
     REQUIRE(
-      unique_identifier::null() == unique_identifier::from_string(null_uuid));
-    REQUIRE(
-      unique_identifier::null().value() ==
-      unique_identifier::from_string(null_uuid).value());
-    REQUIRE(unique_identifier::null() == unique_identifier::null());
-  }
-
-  SECTION("Getter")
-  {
-    std::string null_uuid = "00000000-0000-0000-0000-000000000000";
+      nil_identifier().value() ==
+      unique_identifier::from_string(nil_uuid).value());
+    REQUIRE(nil_identifier() == nil_identifier());
   }
 
   SECTION("Construction from UUID String")
