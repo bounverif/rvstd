@@ -22,9 +22,32 @@ TEST_CASE("Unique Context", "core")  // NOLINT
     REQUIRE(ctx.empty());
   }
 
-  SECTION("Emplace")
+  SECTION("Emplace (rvalue)")
   {
     ctx.emplace(idx, resource(type, {{rel1, {arg1, arg2}}}));
+
+    REQUIRE(ctx.size() == 1);
+  }
+
+  SECTION("Emplace (rvalue)")
+  {
+    ctx.emplace(resource(type, {{rel1, {arg1, arg2}}}));
+
+    REQUIRE(ctx.size() == 1);
+  }
+
+  SECTION("Emplace (lvalue)")
+  {
+    auto res = resource(type, {{rel1, {arg1, arg2}}});
+    ctx.emplace(idx, res);
+
+    REQUIRE(ctx.size() == 1);
+  }
+
+  SECTION("Emplace (lvalue)")
+  {
+    auto res = resource(type, {{rel1, {arg1, arg2}}});
+    ctx.emplace(res);
 
     REQUIRE(ctx.size() == 1);
   }

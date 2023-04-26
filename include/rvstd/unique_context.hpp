@@ -3,7 +3,6 @@
 
 #include "rvstd/resource.hpp"
 #include "rvstd/types.hpp"
-#include "rvstd/unique_identifier.hpp"
 
 #include <boost/container/flat_map.hpp>
 
@@ -31,6 +30,7 @@ struct unique_context {
   // explicit unique_context(options opts = options());
   // explicit unique_context(string_view name, options opts = options());
 
+  // iterators
   RVSTD_NODISCARD
   auto begin() const noexcept -> const_iterator;
 
@@ -38,20 +38,37 @@ struct unique_context {
   auto end() const noexcept -> const_iterator;
 
   RVSTD_NODISCARD
-  auto size() const noexcept -> size_type;
+  auto cbegin() const noexcept -> const_iterator;
 
   RVSTD_NODISCARD
+  auto cend() const noexcept -> const_iterator;
+
+  // capacity
+  RVSTD_NODISCARD
   bool empty() const noexcept;
+
+  RVSTD_NODISCARD
+  auto size() const noexcept -> size_type;
+
+  // modifiers
+  auto emplace(resource const& src) -> resource_identifier;
+  auto emplace(resource&& src) -> resource_identifier;
+  auto emplace(resource_identifier key, resource const& src)
+    -> resource_identifier;
+  auto emplace(resource_identifier key, resource&& src) -> resource_identifier;
+
+  // lookup
+  RVSTD_NODISCARD
+  auto find(string_view key) const -> const_iterator;
 
   RVSTD_NODISCARD
   auto find(resource_identifier key) const -> const_iterator;
 
   RVSTD_NODISCARD
-  auto find(string_view key) const -> const_iterator;
+  auto find(resource const& src) const -> const_iterator;
 
-  auto emplace(resource_identifier key, resource const& src)
-    -> resource_identifier;
-  auto emplace(resource_identifier key, resource&& src) -> resource_identifier;
+  RVSTD_NODISCARD
+  auto find(resource&& src) const -> const_iterator;
 
  private:
   boost::container::flat_map<string, resource_identifier> aliases_;

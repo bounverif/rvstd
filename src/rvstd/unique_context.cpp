@@ -9,9 +9,19 @@ auto unique_context::begin() const noexcept -> const_iterator
   return table_.begin();
 }
 
+auto unique_context::cbegin() const noexcept -> const_iterator
+{
+  return table_.cbegin();
+}
+
 auto unique_context::end() const noexcept -> const_iterator
 {
   return table_.end();
+}
+
+auto unique_context::cend() const noexcept -> const_iterator
+{
+  return table_.cend();
 }
 
 auto unique_context::size() const noexcept -> size_type
@@ -35,6 +45,16 @@ auto unique_context::find(string_view key) const -> const_iterator
 auto unique_context::find(resource_identifier key) const -> const_iterator
 {
   return table_.find(key);
+}
+
+auto unique_context::emplace(resource const& src) -> resource_identifier
+{
+  return emplace(resource_identifier(), src);
+}
+
+auto unique_context::emplace(resource&& src) -> resource_identifier
+{
+  return emplace(resource_identifier(), std::move(src));
 }
 
 auto unique_context::emplace(resource_identifier key, resource const& src)
