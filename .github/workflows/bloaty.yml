@@ -1,6 +1,9 @@
 name: Bloaty Action
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     paths:
       - src/**
