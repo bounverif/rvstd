@@ -18,7 +18,7 @@ struct unique_context {
   using difference_type = std::ptrdiff_t;
   using key_compare = std::less<key_type>;
 
-  using container_type = std::map<key_type, mapped_type>;
+  using container_type = boost::container::flat_map<key_type, mapped_type>;
   using reference = container_type::reference;
   using const_reference = container_type::const_reference;
   using iterator = container_type::const_iterator;
@@ -77,8 +77,8 @@ struct unique_context {
   bool contains(resource const& src) const;
 
  private:
-  std::map<size_type, unique_identifier> hashes_;
-  std::map<unique_identifier, resource> table_;
+  boost::container::flat_map<size_type, unique_identifier> hashes_;
+  boost::container::flat_map<unique_identifier, resource> table_;
 };
 
 }  // namespace rvstd
