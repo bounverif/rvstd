@@ -7,7 +7,7 @@ add_executable(
   rvstd_tests
     options.test.cpp
     resource.test.cpp
-    unique_context.test.cpp
+    unique_hashtable.test.cpp
     unique_identifier.test.cpp
     boost_json_ext.test.cpp
 )

@@ -8,6 +8,9 @@ SET(CMAKE_CXX_EXTENSIONS OFF)
 SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 SET(CMAKE_CXX_FLAGS_COVERAGE "-O0 --coverage")
 
+SET(ENABLE_TESTS ON)
+SET(ENABLE_RVSTD_XT OFF)
+
 ADD_LIBRARY(rvstd)
 
 FIND_PACKAGE(
@@ -25,7 +28,7 @@ TARGET_SOURCES(
   rvstd
   PRIVATE
     "src/rvstd/boost_json_ext.cpp"
-    "src/rvstd/unique_context.cpp"
+    "src/rvstd/unique_hashtable.cpp"
     "src/rvstd/unique_identifier.cpp"
     "src/rvstd/options.cpp"
     "src/rvstd/resource.cpp"
@@ -46,6 +49,6 @@ IF(ENABLE_TESTS)
   ENABLE_TESTING()
 ENDIF()
 
-IF(RVSTD_BUILD_APPS)
-  ADD_SUBDIRECTORY(apps)
+IF(ENABLE_RVSTD_XT)
+  ADD_SUBDIRECTORY(xt)
 ENDIF()

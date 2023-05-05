@@ -1,4 +1,4 @@
-#include "rvstd/unique_context.hpp"
+#include "rvstd/unique_hashtable.hpp"
 
 #include "rvstd/unique_identifier.hpp"
 
@@ -9,7 +9,7 @@
 TEST_CASE("Unique Context Construction", "core")  // NOLINT
 {
   using namespace rvstd;
-  auto ctx = rvstd::unique_context();
+  auto ctx = rvstd::unique_hashtable();
 
   SECTION("Default Construction")
   {
@@ -20,7 +20,7 @@ TEST_CASE("Unique Context Construction", "core")  // NOLINT
 TEST_CASE("Unique Context Lookup", "core")  // NOLINT
 {
   using namespace rvstd;
-  auto ctx = rvstd::unique_context();
+  auto ctx = rvstd::unique_hashtable();
 
   auto idx = rvstd::unique_identifier("key");
   auto type = rvstd::unique_identifier("type");
@@ -52,33 +52,33 @@ TEST_CASE("Unique Context Lookup", "core")  // NOLINT
   {
     const auto src = resource(type, {{rel1, {arg1, arg2}}});
     REQUIRE(ctx.lookup(src) == id1);
-    REQUIRE(ctx.lookup(src) != nil_identifier());
+    REQUIRE(ctx.lookup(src) != unique_identifier::nil());
   }
 
   SECTION("Unsuccessful Lookup")
   {
     const auto src = resource(type, {{rel1, {arg1, arg3}}});
-    REQUIRE(ctx.lookup(src) == nil_identifier());
+    REQUIRE(ctx.lookup(src) == unique_identifier::nil());
   }
 
   SECTION("Lookup 2")
   {
     const auto src = resource(type, {{rel1, {arg2, arg3}}});
     REQUIRE(ctx.lookup(src) == id2);
-    REQUIRE(ctx.lookup(src) != nil_identifier());
+    REQUIRE(ctx.lookup(src) != unique_identifier::nil());
   }
 
   SECTION("Lookup 3")
   {
     const auto src = resource(type, {{rel1, {arg2, arg3}}});
-    REQUIRE(ctx.lookup("nonexistent") == nil_identifier());
+    REQUIRE(ctx.lookup("nonexistent") == unique_identifier::nil());
   }
 }
 
 TEST_CASE("Unique Context Emplace", "core")  // NOLINT
 {
   using namespace rvstd;
-  auto ctx = rvstd::unique_context();
+  auto ctx = rvstd::unique_hashtable();
 
   auto idx = rvstd::unique_identifier("key");
   auto type = rvstd::unique_identifier("type");
@@ -92,7 +92,7 @@ TEST_CASE("Unique Context Emplace", "core")  // NOLINT
   {
     auto id1 = ctx.emplace(idx, resource(type, {{rel1, {arg1, arg2}}}));
 
-    REQUIRE(id1 != nil_identifier());
+    REQUIRE(id1 != unique_identifier::nil());
     REQUIRE(ctx.size() == 1);
     REQUIRE(ctx.find(id1) != ctx.end());
   }
@@ -101,7 +101,7 @@ TEST_CASE("Unique Context Emplace", "core")  // NOLINT
   {
     auto id1 = ctx.emplace(resource(type, {{rel1, {arg1, arg2}}}));
 
-    REQUIRE(id1 != nil_identifier());
+    REQUIRE(id1 != unique_identifier::nil());
     REQUIRE(ctx.size() == 1);
     REQUIRE(ctx.find(id1) != ctx.end());
   }
@@ -111,7 +111,7 @@ TEST_CASE("Unique Context Emplace", "core")  // NOLINT
     auto res = resource(type, {{rel1, {arg1, arg2}}});
     auto id1 = ctx.emplace(idx, res);
 
-    REQUIRE(id1 != nil_identifier());
+    REQUIRE(id1 != unique_identifier::nil());
     REQUIRE(ctx.size() == 1);
     REQUIRE(ctx.find(id1) != ctx.end());
   }
@@ -121,7 +121,7 @@ TEST_CASE("Unique Context Emplace", "core")  // NOLINT
     auto res = resource(type, {{rel1, {arg1, arg2}}});
     auto id1 = ctx.emplace(res);
 
-    REQUIRE(id1 != nil_identifier());
+    REQUIRE(id1 != unique_identifier::nil());
     REQUIRE(ctx.size() == 1);
     REQUIRE(ctx.find(id1) != ctx.end());
   }
@@ -131,7 +131,7 @@ TEST_CASE("Unique Context Emplace", "core")  // NOLINT
     auto src = resource(type, {{rel1, {arg1, arg2}}});
     auto id1 = ctx.emplace("resource", src);
 
-    REQUIRE(id1 != nil_identifier());
+    REQUIRE(id1 != unique_identifier::nil());
     REQUIRE(ctx.size() == 1);
     REQUIRE(ctx.find(id1) != ctx.end());
     REQUIRE(ctx.lookup(resource(type, {{rel1, {arg1, arg2}}})) == id1);
@@ -143,7 +143,7 @@ TEST_CASE("Unique Context Emplace", "core")  // NOLINT
     auto src = resource(type, {{rel1, {arg1, arg2}}});
     auto id1 = ctx.emplace("resource", std::move(src));
 
-    REQUIRE(id1 != nil_identifier());
+    REQUIRE(id1 != unique_identifier::nil());
     REQUIRE(ctx.size() == 1);
     REQUIRE(ctx.find(id1) != ctx.end());
     REQUIRE(ctx.lookup(resource(type, {{rel1, {arg1, arg2}}})) == id1);
@@ -153,7 +153,7 @@ TEST_CASE("Unique Context Emplace", "core")  // NOLINT
   SECTION("Nil Emplace 1")
   {
     auto src = resource(type, {{rel1, {arg1, arg2}}});
-    ctx.emplace(nil_identifier(), src);
+    ctx.emplace(unique_identifier::nil(), src);
 
     REQUIRE(ctx.empty());
   }
@@ -161,7 +161,7 @@ TEST_CASE("Unique Context Emplace", "core")  // NOLINT
   SECTION("Nil Emplace 2")
   {
     auto src = resource(type, {{rel1, {arg1, arg2}}});
-    ctx.emplace(nil_identifier(), std::move(src));
+    ctx.emplace(unique_identifier::nil(), std::move(src));
 
     REQUIRE(ctx.empty());
   }
@@ -173,7 +173,7 @@ TEST_CASE("Unique Context Emplace", "core")  // NOLINT
     auto id4 = ctx.emplace("hello", src);
 
     REQUIRE(id4 != id3);
-    REQUIRE(id4 == nil_identifier());
+    REQUIRE(id4 == unique_identifier::nil());
     REQUIRE(ctx.size() == 1);
   }
 
@@ -184,7 +184,7 @@ TEST_CASE("Unique Context Emplace", "core")  // NOLINT
     auto id4 = ctx.emplace("hello", std::move(src));
 
     REQUIRE(id4 != id3);
-    REQUIRE(id4 == nil_identifier());
+    REQUIRE(id4 == unique_identifier::nil());
     REQUIRE(ctx.size() == 1);
   }
 
@@ -193,7 +193,7 @@ TEST_CASE("Unique Context Emplace", "core")  // NOLINT
     auto src = resource(type, {{rel1, {arg3, arg1}}});
     auto id4 = ctx.emplace("hello", src);
 
-    REQUIRE(id4 != nil_identifier());
+    REQUIRE(id4 != unique_identifier::nil());
     REQUIRE(id4 == unique_identifier("hello"));
     REQUIRE(ctx.size() == 1);
   }
@@ -203,7 +203,7 @@ TEST_CASE("Unique Context Emplace", "core")  // NOLINT
     auto src = resource(type, {{rel1, {arg3, arg1}}});
     auto id4 = ctx.emplace("hello", std::move(src));
 
-    REQUIRE(id4 != nil_identifier());
+    REQUIRE(id4 != unique_identifier::nil());
     REQUIRE(id4 == unique_identifier("hello"));
     REQUIRE(ctx.size() == 1);
   }
@@ -219,7 +219,7 @@ TEST_CASE("Unique Context Emplace", "core")  // NOLINT
     auto id7 = ctx.emplace(id5, src);
 
     REQUIRE(id6 == id4);
-    REQUIRE(id7 == nil_identifier());
+    REQUIRE(id7 == unique_identifier::nil());
     REQUIRE(ctx.size() == 1);
   }
 
@@ -234,7 +234,7 @@ TEST_CASE("Unique Context Emplace", "core")  // NOLINT
     auto id7 = ctx.emplace(id5, std::move(src));
 
     REQUIRE(id6 == id4);
-    REQUIRE(id7 == nil_identifier());
+    REQUIRE(id7 == unique_identifier::nil());
     REQUIRE(ctx.size() == 1);
   }
 }

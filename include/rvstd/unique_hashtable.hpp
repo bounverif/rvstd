@@ -8,9 +8,11 @@
 
 #include <boost/container/flat_map.hpp>
 
+#include <type_traits>
+
 namespace rvstd {
 
-struct unique_context {
+struct unique_hashtable {
   using key_type = unique_identifier;
   using mapped_type = resource;
   using value_type = std::pair<const key_type, mapped_type>;
@@ -18,15 +20,18 @@ struct unique_context {
   using difference_type = std::ptrdiff_t;
   using key_compare = std::less<key_type>;
 
-  using container_type = boost::container::flat_map<key_type, mapped_type>;
+  using container_type = std::map<key_type, mapped_type>;
   using reference = container_type::reference;
   using const_reference = container_type::const_reference;
   using iterator = container_type::const_iterator;
   using const_iterator = container_type::const_iterator;
 
-  using type = unique_context;
+  using type = unique_hashtable;
 
-  unique_context();
+  static_assert(
+    std::is_trivially_copyable<const_iterator>::value, "Trivially copyable");
+
+  unique_hashtable();
 
   // iterators
   RVSTD_NODISCARD
@@ -77,8 +82,8 @@ struct unique_context {
   bool contains(resource const& src) const;
 
  private:
-  boost::container::flat_map<size_type, unique_identifier> hashes_;
-  boost::container::flat_map<unique_identifier, resource> table_;
+  std::map<size_type, unique_identifier> hashes_;
+  std::map<unique_identifier, resource> table_;
 };
 
 }  // namespace rvstd
