@@ -28,6 +28,9 @@ struct unique_identifier {
   // unique identifier from string
   static auto from_string(string_view str) -> unique_identifier;
 
+  // nil identifier
+  static auto nil() -> unique_identifier;
+
   // relations
   friend bool operator<(
     unique_identifier const& lhs, unique_identifier const& rhs) noexcept;
@@ -48,8 +51,6 @@ struct unique_identifier {
  private:
   value_type value_;
 };
-
-auto nil_identifier() -> unique_identifier;
 
 }  // namespace rvstd
 

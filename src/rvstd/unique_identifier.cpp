@@ -91,6 +91,11 @@ auto unique_identifier::from_string(string_view str) -> unique_identifier
   return detail::uuids::from_uuid(str);
 }
 
+auto unique_identifier::nil() -> unique_identifier
+{
+  return boost::uuids::nil_uuid();
+}
+
 // relations
 bool operator<(
   unique_identifier const& lhs, unique_identifier const& rhs) noexcept
@@ -126,11 +131,6 @@ bool operator!=(
 auto hash_value(unique_identifier const& obj) -> std::size_t
 {
   return ::boost::hash<::boost::uuids::uuid>()(obj.value_);
-}
-
-auto nil_identifier() -> unique_identifier
-{
-  return boost::uuids::nil_uuid();
 }
 
 }  // namespace rvstd

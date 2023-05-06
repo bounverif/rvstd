@@ -19,13 +19,14 @@ TEST_CASE(  // NOLINT(readability-function-cognitive-complexity)
   {
     std::string nil_uuid = "00000000-0000-0000-0000-000000000000";
 
-    REQUIRE(nil_identifier().empty() == true);
-    REQUIRE(nil_identifier().to_string() == nil_uuid);
-    REQUIRE(nil_identifier() == unique_identifier::from_string(nil_uuid));
+    REQUIRE(unique_identifier::nil().empty() == true);
+    REQUIRE(unique_identifier::nil().to_string() == nil_uuid);
     REQUIRE(
-      nil_identifier().value() ==
+      unique_identifier::nil() == unique_identifier::from_string(nil_uuid));
+    REQUIRE(
+      unique_identifier::nil().value() ==
       unique_identifier::from_string(nil_uuid).value());
-    REQUIRE(nil_identifier() == nil_identifier());
+    REQUIRE(unique_identifier::nil() == unique_identifier::nil());
   }
 
   SECTION("Construction from UUID String")
