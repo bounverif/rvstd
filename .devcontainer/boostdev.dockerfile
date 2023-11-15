@@ -1,6 +1,7 @@
 FROM ubuntu:22.04
 
-ARG BOOST_VERSION=1.82.0
+ARG BOOST_VERSION=1.83.0
+ARG CATCH_VERSION=3.4.0
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
   && apt-get -y install \
@@ -21,7 +22,7 @@ RUN git clone -j$(nproc) --recursive --depth 1 --branch boost-${BOOST_VERSION} h
   && ./b2 -j$(nproc) install \
   && cd / && rm -rf /tmp/boost
 
-RUN git clone --depth 1 --branch v3.3.2 https://github.com/catchorg/Catch2.git /tmp/catch2 \
+RUN git clone --depth 1 --branch v${CATCH_VERSION} https://github.com/catchorg/Catch2.git /tmp/catch2 \
   && cmake -S/tmp/catch2 -B/tmp/catch2/build \
   -DBUILD_TESTING=OFF \
   -DCATCH_INSTALL_DOCS=OFF \
