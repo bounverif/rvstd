@@ -1,5 +1,5 @@
-#ifndef RVSTD_UNIQUE_HASHTABLE_HPP
-#define RVSTD_UNIQUE_HASHTABLE_HPP
+#ifndef RVSTD_CONTEXT_HPP
+#define RVSTD_CONTEXT_HPP
 
 #include "rvstd/config.hpp"
 #include "rvstd/resource.hpp"
@@ -10,7 +10,7 @@
 
 namespace rvstd {
 
-struct unique_hashtable {
+struct context {
   using key_type = unique_identifier;
   using mapped_type = resource;
   using value_type = std::pair<const key_type, mapped_type>;
@@ -24,12 +24,12 @@ struct unique_hashtable {
   using iterator = container_type::const_iterator;
   using const_iterator = container_type::const_iterator;
 
-  using type = unique_hashtable;
+  using type = context;
 
   static_assert(
     std::is_trivially_copyable<const_iterator>::value, "Trivially copyable");
 
-  unique_hashtable();
+  context();
 
   // iterators
   RVSTD_NODISCARD

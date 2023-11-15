@@ -1,4 +1,4 @@
-#include "rvstd/unique_hashtable.hpp"
+#include "rvstd/context.hpp"
 
 #include "rvstd/unique_identifier.hpp"
 
@@ -9,7 +9,7 @@
 TEST_CASE("Unique Context Construction", "core")  // NOLINT
 {
   using namespace rvstd;
-  auto ctx = rvstd::unique_hashtable();
+  auto ctx = rvstd::context();
 
   SECTION("Default Construction")
   {
@@ -20,7 +20,7 @@ TEST_CASE("Unique Context Construction", "core")  // NOLINT
 TEST_CASE("Unique Context Lookup", "core")  // NOLINT
 {
   using namespace rvstd;
-  auto ctx = rvstd::unique_hashtable();
+  auto ctx = rvstd::context();
 
   auto idx = rvstd::unique_identifier("key");
   auto type = rvstd::unique_identifier("type");
@@ -78,7 +78,7 @@ TEST_CASE("Unique Context Lookup", "core")  // NOLINT
 TEST_CASE("Unique Context Emplace", "core")  // NOLINT
 {
   using namespace rvstd;
-  auto ctx = rvstd::unique_hashtable();
+  auto ctx = rvstd::context();
 
   auto idx = rvstd::unique_identifier("key");
   auto type = rvstd::unique_identifier("type");

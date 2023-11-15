@@ -1,64 +1,64 @@
-#include "rvstd/unique_hashtable.hpp"
+#include "rvstd/context.hpp"
 
 #include "rvstd/types.hpp"
 #include "rvstd/unique_identifier.hpp"
 
 namespace rvstd {
 
-unique_hashtable::unique_hashtable() = default;
+context::context() = default;
 
-auto unique_hashtable::begin() noexcept -> iterator
+auto context::begin() noexcept -> iterator
 {
   return table_.begin();
 }
-auto unique_hashtable::end() noexcept -> iterator
+auto context::end() noexcept -> iterator
 {
   return table_.end();
 }
-auto unique_hashtable::begin() const noexcept -> const_iterator
+auto context::begin() const noexcept -> const_iterator
 {
   return table_.begin();
 }
-auto unique_hashtable::end() const noexcept -> const_iterator
+auto context::end() const noexcept -> const_iterator
 {
   return table_.end();
 }
-auto unique_hashtable::cbegin() const noexcept -> const_iterator
+auto context::cbegin() const noexcept -> const_iterator
 {
   return table_.cbegin();
 }
-auto unique_hashtable::cend() const noexcept -> const_iterator
+auto context::cend() const noexcept -> const_iterator
 {
   return table_.cend();
 }
 
 // capacity
-bool unique_hashtable::empty() const noexcept
+bool context::empty() const noexcept
 {
   return table_.empty();
 }
-auto unique_hashtable::size() const noexcept -> size_type
+auto context::size() const noexcept -> size_type
 {
   return table_.size();
 }
-auto unique_hashtable::max_size() const noexcept -> size_type
+auto context::max_size() const noexcept -> size_type
 {
   return table_.max_size();
 }
 
 // modifiers
-void unique_hashtable::clear() noexcept
+void context::clear() noexcept
 {
   return table_.clear();
 }
 
 // lookup
-auto unique_hashtable::find(unique_identifier key) const -> const_iterator
+auto context::find(unique_identifier key) const -> const_iterator
 {
   return table_.find(key);
 }
 
-auto unique_hashtable::lookup(string_view key) const -> unique_identifier
+auto context::lookup(string_view key) const -> unique_identifier
 {
   if(auto const it = table_.find(unique_identifier(key)); it != table_.end()) {
     return it->first;
@@ -66,7 +66,7 @@ auto unique_hashtable::lookup(string_view key) const -> unique_identifier
   return unique_identifier::nil();
 }
 
-auto unique_hashtable::lookup(resource const& src) const -> unique_identifier
+auto context::lookup(resource const& src) const -> unique_identifier
 {
   const auto h = std::hash<resource>{}(src);
   if(auto const it = hashes_.find(h); it != hashes_.end()) {
@@ -75,17 +75,17 @@ auto unique_hashtable::lookup(resource const& src) const -> unique_identifier
   return unique_identifier::nil();
 }
 
-auto unique_hashtable::emplace(resource const& src) -> unique_identifier
+auto context::emplace(resource const& src) -> unique_identifier
 {
   return emplace(unique_identifier(), src);
 }
 
-auto unique_hashtable::emplace(resource&& src) -> unique_identifier
+auto context::emplace(resource&& src) -> unique_identifier
 {
   return emplace(unique_identifier(), std::move(src));
 }
 
-auto unique_hashtable::emplace(unique_identifier key, const resource& src)
+auto context::emplace(unique_identifier key, const resource& src)
   -> unique_identifier
 {
   if(key == unique_identifier::nil()) {
@@ -107,7 +107,7 @@ auto unique_hashtable::emplace(unique_identifier key, const resource& src)
   return unique_identifier::nil();
 }
 
-auto unique_hashtable::emplace(unique_identifier key, resource&& src)
+auto context::emplace(unique_identifier key, resource&& src)
   -> unique_identifier
 {
   if(key == unique_identifier::nil()) {
@@ -128,27 +128,25 @@ auto unique_hashtable::emplace(unique_identifier key, resource&& src)
   return unique_identifier::nil();
 }
 
-auto unique_hashtable::emplace(string_view name, resource const& src)
+auto context::emplace(string_view name, resource const& src)
   -> unique_identifier
 {
   return emplace(unique_identifier(name), src);
 }
 
-auto unique_hashtable::emplace(string_view name, resource&& src)
-  -> unique_identifier
+auto context::emplace(string_view name, resource&& src) -> unique_identifier
 {
   return emplace(unique_identifier(name), std::move(src));
 }
 
-auto unique_hashtable::erase(const_iterator pos) -> iterator
+auto context::erase(const_iterator pos) -> iterator
 {
   const auto h = std::hash<resource>{}(pos->second);
   hashes_.erase(h);
   return table_.erase(pos);
 }
 
-auto unique_hashtable::erase(const_iterator first, const_iterator last)
-  -> iterator
+auto context::erase(const_iterator first, const_iterator last) -> iterator
 {
   for(auto it = first; it != last; ++it) {
     const auto h = std::hash<resource>{}(it->second);
@@ -157,7 +155,7 @@ auto unique_hashtable::erase(const_iterator first, const_iterator last)
   return table_.erase(first, last);
 }
 
-bool unique_hashtable::erase(unique_identifier key)
+bool context::erase(unique_identifier key)
 {
   if(const auto it = table_.find(key); it != table_.end()) {
     const auto h = std::hash<resource>{}(it->second);
@@ -168,22 +166,22 @@ bool unique_hashtable::erase(unique_identifier key)
   return false;
 }
 
-bool unique_hashtable::erase(string_view key)
+bool context::erase(string_view key)
 {
   return this->erase(unique_identifier(key));
 }
 
-bool unique_hashtable::contains(unique_identifier key) const
+bool context::contains(unique_identifier key) const
 {
   return table_.find(key) != table_.end();
 }
 
-bool unique_hashtable::contains(string_view key) const
+bool context::contains(string_view key) const
 {
   return table_.find(unique_identifier(key)) != table_.end();
 }
 
-bool unique_hashtable::contains(resource const& src) const
+bool context::contains(resource const& src) const
 {
   return lookup(src) != unique_identifier::nil();
 }
