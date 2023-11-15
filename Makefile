@@ -44,3 +44,5 @@ coverage:
 	cmake --build $(BUILD_DIRECTORY)
 	ctest --test-dir $(BUILD_DIRECTORY)
 	gcovr $(BUILD_DIRECTORY) -r $(WORKSPACE) -e $(WORKSPACE)/tests --print-summary
+
+.PHONY: all configure build test benchmark cbuild crun coverage
