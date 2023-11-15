@@ -5,6 +5,7 @@
 #include "rvstd/unique_identifier.hpp"
 
 #include <cstddef>
+#include <functional>
 #include <map>
 
 namespace rvstd {
@@ -49,6 +50,12 @@ namespace std {
 template<>
 struct hash<rvstd::resource> {
   std::size_t operator()(rvstd::resource const& obj) const noexcept;
+};
+
+template<>
+struct equal_to<rvstd::resource> {
+  bool operator()(
+    ::rvstd::resource const& lhs, ::rvstd::resource const& rhs) const noexcept;
 };
 
 }  // namespace std

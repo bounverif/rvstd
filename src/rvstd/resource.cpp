@@ -54,3 +54,9 @@ auto std::hash<::rvstd::resource>::operator()(
 {
   return ::boost::hash<::rvstd::resource>{}(obj);
 }
+
+bool std::equal_to<::rvstd::resource>::operator()(
+  ::rvstd::resource const& lhs, ::rvstd::resource const& rhs) const noexcept
+{
+  return lhs == rhs;
+}

@@ -1,12 +1,10 @@
-#ifndef RVSTD_CONTEXT_HPP
-#define RVSTD_CONTEXT_HPP
+#ifndef RVSTD_UNIQUE_HASHTABLE_HPP
+#define RVSTD_UNIQUE_HASHTABLE_HPP
 
 #include "rvstd/config.hpp"
 #include "rvstd/resource.hpp"
 #include "rvstd/types.hpp"
 #include "rvstd/unique_identifier.hpp"
-
-#include <boost/container/flat_map.hpp>
 
 #include <type_traits>
 
