@@ -44,11 +44,16 @@ struct options {
   RVSTD_NODISCARD
   auto name() const -> string_view;
   RVSTD_NODISCARD
-  auto operator[](key_type x) const -> mapped_type const&;
+  auto data() const noexcept -> mapped_type const&;
   RVSTD_NODISCARD
-  auto at(key_type key) const -> mapped_type const&;
+  auto operator[](key_type key) const -> mapped_type const&;
   RVSTD_NODISCARD
-  auto find(key_type key, std::error_code& ec) const noexcept -> const_pointer;
+  auto at(key_type path) const -> mapped_type const&;
+  RVSTD_NODISCARD
+  auto find(key_type key) const noexcept -> const_pointer;
+  RVSTD_NODISCARD
+  auto find_at(key_type path, std::error_code& ec) const noexcept
+    -> const_pointer;
 
   // capacity
   RVSTD_NODISCARD
@@ -64,11 +69,16 @@ struct options {
   // modifiers
   RVSTD_NODISCARD
   auto name(string_view name) -> type&;
-  auto set(string_view path, mapped_type const& value) -> type&;
-  auto load(string_view path) -> type&;
-  auto load(std::filesystem::path path) -> type&;
-  auto loads(string_view path) -> type&;
-  auto merge(mapped_type const& value) -> type&;
+  auto set(string_view key, mapped_type const& value) -> type&;
+  auto set_at(string_view path, mapped_type const& value) -> type&;
+  auto load(string_view filepath) -> type&;
+  auto load(std::filesystem::path filepath) -> type&;
+  auto load_at(string_view path, std::filesystem::path filepath) -> type&;
+  auto loads(string_view str) -> type&;
+  auto loads_at(string_view path, string_view str) -> type&;
+  auto merge(options const& value) -> type&;
+  auto merge_at(string_view path, options const& value) -> type&;
+
   void clear() noexcept;
 
   // value modifiers

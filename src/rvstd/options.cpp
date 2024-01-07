@@ -19,15 +19,39 @@ options::options(std::initializer_list<value_type> il, size_type min_capacity)
 {
 }
 
-auto options::at(key_type key) const -> mapped_type const&
+auto options::data() const noexcept -> mapped_type const&
 {
-  return data_.at_pointer(key);
+  return data_;
 }
 
-auto options::find(key_type key, std::error_code& ec) const noexcept
+auto options::name() const -> string_view
+{
+  return name_;
+}
+
+auto options::operator[](key_type key) const -> mapped_type const&
+{
+  return data_.as_object().at(key);
+}
+
+auto options::at(key_type path) const -> mapped_type const&
+{
+  return data_.at_pointer(path);
+}
+
+auto options::find(key_type key) const noexcept -> const_pointer
+{
+  const auto* kv_pair = data_.as_object().find(key);
+  if(kv_pair == data_.as_object().end()) {
+    return nullptr;
+  }
+  return &kv_pair->value();
+}
+
+auto options::find_at(key_type path, std::error_code& ec) const noexcept
   -> const_pointer
 {
-  return data_.find_pointer(key, ec);
+  return data_.find_pointer(path, ec);
 }
 
 RVSTD_NODISCARD
@@ -65,15 +89,21 @@ auto options::clear() noexcept -> void
   data_.as_object().clear();
 }
 
-auto options::set(string_view path, mapped_type const& value) -> type&
+auto options::set(string_view key, mapped_type const& value) -> type&
+{
+  data_.as_object().insert_or_assign(key, value);
+  return *this;
+}
+
+auto options::set_at(string_view path, mapped_type const& value) -> type&
 {
   data_.set_at_pointer(path, value);
   return *this;
 }
 
-auto options::merge(mapped_type const& value) -> type&
+auto options::merge(options const& value) -> type&
 {
-  boost::json::merge_patch(data_, value);
+  boost::json::merge_patch(data_, value.data());
   return *this;
 }
 
