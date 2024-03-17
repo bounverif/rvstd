@@ -7,7 +7,7 @@ add_executable(
   rvstd_tests
     options.test.cpp
     resource.test.cpp
-    context.test.cpp
+    tableau.test.cpp
     unique_identifier.test.cpp
     boost_json_ext.test.cpp
 )

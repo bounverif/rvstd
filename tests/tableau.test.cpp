@@ -1,4 +1,4 @@
-#include "rvstd/context.hpp"
+#include "rvstd/tableau.hpp"
 
 #include "rvstd/unique_identifier.hpp"
 
@@ -6,10 +6,10 @@
 
 #include <utility>
 
-TEST_CASE("Unique Context Construction", "core")  // NOLINT
+TEST_CASE("Unique Tableau Construction", "core")  // NOLINT
 {
   using namespace rvstd;
-  auto ctx = rvstd::context();
+  auto ctx = rvstd::tableau();
 
   SECTION("Default Construction")
   {
@@ -17,10 +17,10 @@ TEST_CASE("Unique Context Construction", "core")  // NOLINT
   }
 }
 
-TEST_CASE("Unique Context Lookup", "core")  // NOLINT
+TEST_CASE("Unique Tableau Lookup", "core")  // NOLINT
 {
   using namespace rvstd;
-  auto ctx = rvstd::context();
+  auto ctx = rvstd::tableau();
 
   auto idx = rvstd::unique_identifier("key");
   auto type = rvstd::unique_identifier("type");
@@ -75,10 +75,10 @@ TEST_CASE("Unique Context Lookup", "core")  // NOLINT
   }
 }
 
-TEST_CASE("Unique Context Emplace", "core")  // NOLINT
+TEST_CASE("Unique Tableau Emplace", "core")  // NOLINT
 {
   using namespace rvstd;
-  auto ctx = rvstd::context();
+  auto ctx = rvstd::tableau();
 
   auto idx = rvstd::unique_identifier("key");
   auto type = rvstd::unique_identifier("type");
