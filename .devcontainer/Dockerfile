@@ -4,8 +4,8 @@
 # > docker run -it --rm -v $(PWD):/workspaces/rvstd bounverif/rvstd
 FROM ubuntu:22.04
 
-ARG BOOST_VERSION=1.83.0
-ARG CATCH_VERSION=3.5.0
+ARG BOOST_VERSION=1.84.0
+ARG CATCH_VERSION=3.5.3
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
   && apt-get -y install \
