@@ -3,7 +3,7 @@
 # > docker build . -t ghcr.io/bounverif/cppdevel:latest
 # > docker run -it --rm -v $(PWD):/workspaces/cppdevel bounverif/cppdevel
 #
-FROM bounverif/cppdevel:latest
+FROM ghcr.io/bounverif/cppdevel:latest
 
 ARG BOOST_VERSION=1.84.0
 
