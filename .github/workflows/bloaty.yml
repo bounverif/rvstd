@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - src/**
   pull_request:
     paths:
       - src/**
@@ -13,14 +15,14 @@ jobs:
   bloaty-job:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/bounverif/boostdev:1.82.0
+      image: ghcr.io/bounverif/boostdevel:latest
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.github_token }}
 
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Configure and build this project
         uses: threeal/cmake-action@latest
