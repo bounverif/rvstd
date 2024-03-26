@@ -1,11 +1,20 @@
-name: Build Boost developer image
+name: boostdevel_cbuild
 
 on:
-  workflow_dispatch:
   push:
     paths:
       - containers/boostdevel/**
       - .github/workflows/boostdevel.yml # Self-trigger
+
+  workflow_run:
+    workflows: 
+      - cppdevel_cbuild
+    branches:
+      - main
+    types: 
+      - completed
+      
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
