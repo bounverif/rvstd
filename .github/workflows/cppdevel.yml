@@ -1,4 +1,4 @@
-name: Build Boost developer image
+name: cppdevel_cbuild
 
 on:
   workflow_dispatch:
