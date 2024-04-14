@@ -2,6 +2,7 @@
 
 #include <boost/regex.hpp>
 
+#include <sstream>
 #include <string>
 
 namespace rvstd {
