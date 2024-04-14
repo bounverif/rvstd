@@ -23,15 +23,18 @@
           "--header-insertion=iwyu",
           "--header-insertion-decorators",
           "--clang-tidy",
-          "--all-scopes-completion"
+          "--all-scopes-completion",
+          "--compile-commands-dir=/tmp/${localWorkspaceFolderBasename}/build/default"
         ],
-        "gcovViewer.buildDirectories": ["/tmp/rvstd/build"],
+        "gcovViewer.buildDirectories": [
+          "/tmp/${localWorkspaceFolderBasename}/build/coverage"
+        ],
         "gcovViewer.highlightMissedLines": true,
         "editor.formatOnSave": true,
         "editor.formatOnPaste": true
       }
     }
   },
-  "postCreateCommand": "make configure",
+  "postStartCommand": "cmake --preset default",
   "remoteUser": "bounverif"
 }

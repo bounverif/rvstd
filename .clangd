@@ -2,9 +2,12 @@ Diagnostics:
   UnusedIncludes: Strict
 
 InlayHints:
-  Enabled: No
-  ParameterNames: Yes
-  DeducedTypes: Yes
+  Enabled: false
+  ParameterNames: true
+  DeducedTypes: true
 
 Hover:
-  ShowAKA: Yes
+  ShowAKA: true
+
+Index:
+  StandardLibrary: true
