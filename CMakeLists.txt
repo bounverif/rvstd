@@ -78,4 +78,5 @@ EXPORT(
 INSTALL(
   EXPORT rvstd-config
   DESTINATION "${CMAKE_INSTALL_DATADIR}/rvstd/cmake"
-  NAMESPACE rvstd::)
+  NAMESPACE rvstd::
+)
