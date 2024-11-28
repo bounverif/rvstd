@@ -1,0 +1,57 @@
+name: Check_installation
+
+on:
+    push:
+      branches:
+        - main
+      paths:
+        - src/**
+        - include/**
+        - CMakeLists.txt
+    pull_request:
+      paths:
+        - src/**
+        - include/**
+        - CMakeLists.txt
+    workflow_dispatch:
+
+jobs:
+    bloaty-job:
+        runs-on: ubuntu-latest
+        container:
+            image: ghcr.io/bounverif/rvstd:latest
+            credentials:
+                username: ${{ github.actor }}
+                password: ${{ secrets.github_token }}
+
+        steps:
+            - name: Check out the repository
+              uses: actions/checkout@v4
+            
+            - name: Configure and build this project
+              uses: threeal/cmake-action@latest
+              with:
+                build-dir: build
+                args: -DCMAKE_BUILD_TYPE=RELEASE
+            
+            - name: Install the library
+              run: cmake --install build --prefix /usr/local
+            
+            - name: Verify installation
+              run: |
+                if [ -f /usr/local/lib/librvstd.a ]; then
+                  echo "librvstd.a is installed."
+                else
+                  echo "librvstd.a is not installed."
+                  exit 1
+                fi
+
+            - name: Check if the rvstd file has been generated
+              run: |
+                if [ -f /usr/local/include/rvstd ]; then
+                  echo "rvstd file is generated."
+                else
+                  echo "rvstd file is not generated."
+                  exit 1
+                fi
+            
