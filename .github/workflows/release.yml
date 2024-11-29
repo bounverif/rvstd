@@ -19,7 +19,7 @@ jobs:
     verification-job:
         runs-on: ubuntu-latest
         container:
-            image: ghcr.io/bounverif/rvstd:latest
+            image: ghcr.io/omerfaruk691/rvstd:latest
             credentials:
                 username: ${{ github.actor }}
                 password: ${{ secrets.github_token }}
