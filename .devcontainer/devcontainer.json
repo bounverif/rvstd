@@ -31,6 +31,6 @@
       }
     }
   },
-  "postCreateCommand": "cmake --preset default",
+  "postStartCommand": "cmake --preset default",
   "remoteUser": "bounverif"
 }

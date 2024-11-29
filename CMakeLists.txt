@@ -28,6 +28,7 @@ TARGET_SOURCES(
   rvstd
   PRIVATE
     "src/rvstd/boost_json_ext.cpp"
+    "src/rvstd/envsubst.cpp"
     "src/rvstd/unique_identifier.cpp"
     "src/rvstd/tableau.cpp"
     "src/rvstd/options.cpp"
