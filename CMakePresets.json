@@ -14,13 +14,13 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
       },
-      "inherits": "linux-base"
+      "inherits": "linux"
     },
     {
-      "name": "linux-base",
+      "name": "linux",
       "generator": "Ninja",
-      "binaryDir": "/tmp/${sourceDirName}/build/${presetName}",
-      "installDir": "/tmp/${sourceDirName}/install/${presetName}",
+      "binaryDir": "/tmp/rvstd/build/${presetName}",
+      "installDir": "/tmp/rvstd/install/${presetName}",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
