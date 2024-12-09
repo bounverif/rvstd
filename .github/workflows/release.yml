@@ -29,7 +29,8 @@ jobs:
         steps:
             - name: Check out the repository
               uses: actions/checkout@v4
-            
+              with:
+                  persist-credentials: false
             - name: Configure and build this project
               uses: threeal/cmake-action@v2.0.0
               with:
