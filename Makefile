@@ -1,5 +1,5 @@
 WORKSPACE = $(PWD)
-BUILD_DIRECTORY = /tmp/$(basename $(notdir ${WORKSPACE}))/build
+BUILD_DIRECTORY = /tmp/rvstd/build
 
 all: configure build test
 
@@ -12,7 +12,7 @@ configure:
 		-DENABLE_TESTS=ON
 	ln -sf $(BUILD_DIRECTORY)/compile_commands.json $(WORKSPACE)/compile_commands.json
 
-build:
+build: configure
 	cmake --build $(BUILD_DIRECTORY)
 
 purge:
@@ -22,16 +22,11 @@ purge:
 test: build
 	ctest --test-dir $(BUILD_DIRECTORY) --output-on-failure
 
+install: build
+	cmake --install $(BUILD_DIRECTORY)
+
 benchmark: configure build
 	$(BUILD_DIRECTORY)/tests/rvstd_benchmarks
-
-cbuild:
-	DOCKER_BUILDKIT=1 docker build . \
-	--file .devcontainer/Dockerfile \
-	--tag bounverif/rvstd:latest
-
-crun:
-	docker run -it --rm -v $(PWD):/workspaces/rvstd bounverif/rvstd:latest
 
 coverage:
 	cmake \
@@ -45,4 +40,4 @@ coverage:
 	ctest --test-dir $(BUILD_DIRECTORY)
 	gcovr $(BUILD_DIRECTORY) -r $(WORKSPACE) -e $(WORKSPACE)/tests --print-summary
 
-.PHONY: all configure build test benchmark cbuild crun coverage
+.PHONY: all configure build test benchmark coverage

@@ -1,11 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json.
 {
   "name": "rvstd",
-  // Sets the run context to one level up instead of the .devcontainer folder.
-  "context": "..",
-  // Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
-  "dockerFile": "./Dockerfile",
-  // Set *default* container specific settings.json values on container create.
+  "image": "ghcr.io/bounverif/rvstd:latest-devel",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -24,10 +20,10 @@
           "--header-insertion-decorators",
           "--clang-tidy",
           "--all-scopes-completion",
-          "--compile-commands-dir=/tmp/${localWorkspaceFolderBasename}/build/default"
+          "--compile-commands-dir=/tmp/rvstd/build/default"
         ],
         "gcovViewer.buildDirectories": [
-          "/tmp/${localWorkspaceFolderBasename}/build/coverage"
+          "/tmp/rvstd/build"
         ],
         "gcovViewer.highlightMissedLines": true,
         "editor.formatOnSave": true,
