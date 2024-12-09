@@ -8,11 +8,13 @@ on:
         - src/**
         - include/**
         - CMakeLists.txt
+        - .github/workflows/release.yml
     pull_request:
       paths:
         - src/**
         - include/**
         - CMakeLists.txt
+        - .github/workflows/release.yml
     workflow_dispatch:
 
 jobs:
