@@ -54,12 +54,12 @@ jobs:
                   exit 1
                 fi
 
-            - name: Check if the rvstd file has been generated
+            - name: Check if the rvstd directory has been generated
               run: |
-                if [ -f /usr/local/include/rvstd ]; then
-                  echo "rvstd file is generated."
+                if [ -d /usr/local/include/rvstd ]; then
+                  echo "rvstd directory is generated."
                 else
-                  echo "rvstd file is not generated."
+                  echo "rvstd directory is not generated."
                   exit 1
                 fi
             
