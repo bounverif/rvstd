@@ -118,15 +118,6 @@ install(
   NAMESPACE rvstd::
 )
 
-# Enable testing if requested
-if(ENABLE_TESTS)
-  enable_testing()
-  add_subdirectory(tests)
-endif()
-
-# Debugging message
-message(STATUS "Building rvstd version ${PROJECT_VERSION}")
-
 
 IF(ENABLE_RVSTD_XT)
   ADD_SUBDIRECTORY(xt)
@@ -158,3 +149,12 @@ INSTALL(
   DESTINATION "${CMAKE_INSTALL_DATADIR}/rvstd/cmake"
   NAMESPACE rvstd::
 )
+
+# Enable testing if requested
+if(ENABLE_TESTS)
+  enable_testing()
+  add_subdirectory(tests)
+endif()
+
+# Debugging message
+message(STATUS "Building rvstd version ${PROJECT_VERSION}")
