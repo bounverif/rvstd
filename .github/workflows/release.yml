@@ -22,6 +22,7 @@ jobs:
         runs-on: ubuntu-latest
         container:
             image: ghcr.io/bounverif/rvstd:latest-devel
+            options: --user root
             credentials:
                 username: ${{ github.actor }}
                 password: ${{ secrets.github_token }}
@@ -34,7 +35,7 @@ jobs:
 
             - name: Set up permissions
               run: sudo chmod -R 777 /__w/_temp
-              
+
             - name: Configure and build this project
               uses: threeal/cmake-action@v2.0.0
               with:
