@@ -1,0 +1,71 @@
+name: Check_installation
+
+on:
+    push:
+      branches:
+        - main
+      paths:
+        - src/**
+        - include/**
+        - CMakeLists.txt
+        - .github/workflows/release.yml
+    pull_request:
+      paths:
+        - src/**
+        - include/**
+        - CMakeLists.txt
+        - .github/workflows/release.yml
+    workflow_dispatch:
+
+jobs:
+    verification-job:
+        runs-on: ubuntu-latest
+        container:
+            image: ghcr.io/bounverif/rvstd:latest-devel
+            options: --user root
+            credentials:
+                username: ${{ github.actor }}
+                password: ${{ secrets.github_token }}
+
+        steps:
+            - name: Check out the repository
+              uses: actions/checkout@v4
+              with:
+                  persist-credentials: false
+
+            - name: Set up permissions
+              run: sudo chmod -R 777 /__w/_temp
+
+            - name: Configure and build this project
+              uses: threeal/cmake-action@v2.0.0
+              with:
+                build-dir: build
+                args: -DCMAKE_BUILD_TYPE=RELEASE
+            
+            - name: Install the library
+              run: cmake --install build --prefix /usr/local
+            
+            - name: Verify installation
+              run: |
+                if [ -f /usr/local/lib/librvstd.a ]; then
+                  echo "librvstd.a is installed."
+                else
+                  echo "librvstd.a is not installed."
+                  exit 1
+                fi
+                if [ -f /usr/local/lib/librvstd.so ]; then
+                  echo "librvstd.so is installed."
+                else
+                  echo "librvstd.so is not installed."
+                  exit 1
+                fi
+
+            - name: Check if the rvstd directory has been generated
+              run: |
+                if [ -d /usr/local/include/rvstd ]; then
+                  echo "rvstd directory is generated."
+                else
+                  echo "rvstd directory is not generated."
+                  exit 1
+                fi
+            
