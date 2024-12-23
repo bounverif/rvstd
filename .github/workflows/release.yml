@@ -43,10 +43,7 @@ jobs:
                 args: -DCMAKE_BUILD_TYPE=RELEASE
             
             - name: Install the library
-              run: cmake --build . --target install --prefix /usr/local
-
-            - name: Install the library as shared
-              run: cmake --build . --target rvstd-shared --target install --prefix /usr/local
+              run: cmake --install build --prefix /usr/local
             
             - name: Verify installation
               run: |
