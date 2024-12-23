@@ -53,6 +53,12 @@ jobs:
                   echo "librvstd.a is not installed."
                   exit 1
                 fi
+                if [ -f /usr/local/lib/librvstd.so ]; then
+                  echo "librvstd.so is installed."
+                else
+                  echo "librvstd.so is not installed."
+                  exit 1
+                fi
 
             - name: Check if the rvstd directory has been generated
               run: |
