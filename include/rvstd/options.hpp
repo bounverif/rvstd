@@ -89,7 +89,9 @@ struct options {
   friend bool operator!=(type const& lhs, type const& rhs) noexcept;
 
  private:
-  boost::json::string name_;
+  boost::json::string path_; // virtual path
+  boost::json::string name_; // virtual path
+  boost::json::array dirs_;
   boost::json::value data_;
 };
 

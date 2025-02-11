@@ -2,8 +2,6 @@
 
 #include "rvstd/boost_json_ext.hpp"
 
-#include <boost/json/system_error.hpp>
-
 namespace rvstd {
 
 options::~options() = default;
