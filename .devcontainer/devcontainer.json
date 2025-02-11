@@ -1,7 +1,10 @@
 // For format details, see https://aka.ms/devcontainer.json.
 {
   "name": "rvstd",
-  "image": "ghcr.io/bounverif/rvstd:latest-devel",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "../containers/rvstd-devel"
+  },
   "customizations": {
     "vscode": {
       "extensions": [

@@ -6,8 +6,8 @@ ARG RVSTD_VERSION=latest
 FROM ${RVSTD_BASE_IMAGE}:${RVSTD_BASE_IMAGE_VERSION} AS rvstd-builder
 ARG TARGETARCH TARGETOS TARGETPLATFORM TARGETVARIANT
 
-ARG BOOST_VERSION=1.86.0
-ARG CATCH_VERSION=3.7.1
+ARG BOOST_VERSION=1.87.0
+ARG CATCH_VERSION=3.8.0
 ARG PEGTL_VERSION=3.2.8
 
 ENV PIP_BREAK_SYSTEM_PACKAGES=1
@@ -56,7 +56,7 @@ RUN git clone --depth 1 --branch v${CATCH_VERSION} "https://github.com/catchorg/
     && cmake --build /tmp/catch2/build/ --target install -j$(nproc) \
     && rm -rf /tmp/catch2
 
-RUN git clone --depth 1 --recursive "https://github.com/google/bloaty.git" /tmp/bloaty 
+RUN git clone --depth 1 --recursive "https://github.com/google/bloaty.git" /tmp/bloaty
 RUN cmake -S/tmp/bloaty -B/tmp/bloaty/build \
       -DBUILD_TESTING=OFF \
       -DCATCH_INSTALL_DOCS=OFF \
