@@ -7,7 +7,7 @@ namespace rvstd {
 options::~options() = default;
 options::options(options const& opts) = default;
 auto options::operator=(options const& opts) -> options& = default;
-options::options() : data_(boost::json::object{}){};
+options::options() : data_(boost::json::object{}) {};
 options::options(string_view name, size_type min_capacity)
     : name_(name), data_(boost::json::object(min_capacity))
 {
