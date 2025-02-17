@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configure and build this project
-        uses: threeal/cmake-action@latest
+        uses: threeal/cmake-action@v2.1.0
         with:
           build-dir: build
           args: -DCMAKE_BUILD_TYPE=RELEASE
