@@ -2,8 +2,12 @@
 {
   "name": "rvstd",
   "build": {
-    "dockerfile": "Dockerfile",
-    "context": "../containers/rvstd-devel"
+    "dockerfile": "../containers/rvstd-devel/Dockerfile",
+    "context": "../containers/rvstd-devel",
+    "target": "rvstd-devel",
+    "args": {
+      "RVSTD_BUILDER_IMAGE": "rvstd-builder"
+    }
   },
   "customizations": {
     "vscode": {

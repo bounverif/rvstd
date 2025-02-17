@@ -8,7 +8,7 @@ configure:
 		-S $(WORKSPACE) \
 		-B $(BUILD_DIRECTORY) \
 		-DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-		-DCMAKE_BUILD_TYPE=RELEASE \
+		-DCMAKE_BUILD_TYPE=Release \
 		-DENABLE_TESTS=ON
 	ln -sf $(BUILD_DIRECTORY)/compile_commands.json $(WORKSPACE)/compile_commands.json
 
@@ -25,6 +25,9 @@ test: build
 install: build
 	cmake --install $(BUILD_DIRECTORY)
 
+local_install: build
+	cmake --install $(BUILD_DIRECTORY) --prefix $(WORKSPACE)/locals
+
 benchmark: configure build
 	$(BUILD_DIRECTORY)/tests/rvstd_benchmarks
 
@@ -40,4 +43,4 @@ coverage:
 	ctest --test-dir $(BUILD_DIRECTORY)
 	gcovr $(BUILD_DIRECTORY) -r $(WORKSPACE) -e $(WORKSPACE)/tests --print-summary
 
-.PHONY: all configure build test benchmark coverage
+.PHONY: all configure build test benchmark coverage install local_install purge

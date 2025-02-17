@@ -16,6 +16,7 @@ repos:
     rev: v5.0.0 # Use the ref you want to point at
     hooks:
       - id: check-json
+        exclude: ".devcontainer"
       - id: check-yaml
       - id: forbid-submodules
       - id: end-of-file-fixer

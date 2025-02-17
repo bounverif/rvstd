@@ -1,9 +1,9 @@
 RVSTD_IMAGE_NAME ?= localhost/rvstd
 RVSTD_VERSION ?= latest
-CONTEXT ?= .
+CONTAINER_BUILD_CONTEXT ?= .
 CONTAINER_CACHE_TTL=24h
 
-builder: 
+builder:
 	buildah build \
 		-f rvstd-devel/Dockerfile \
 		--build-arg RVSTD_IMAGE_NAME=${RVSTD_IMAGE_NAME} \
@@ -13,7 +13,7 @@ builder:
 		--cache-ttl=${CONTAINER_CACHE_TTL} \
 		--target rvstd-builder \
 		--tag rvstd:${RVSTD_VERSION}-builder \
-	${CONTEXT}
+	${CONTAINER_BUILD_CONTEXT}/rvstd-devel
 
 devel: builder
 	buildah build \
@@ -25,4 +25,6 @@ devel: builder
 		--cache-ttl=${CONTAINER_CACHE_TTL} \
 		--target rvstd-devel \
 		--tag rvstd:${RVSTD_VERSION}-devel \
-	${CONTEXT}
+	${CONTAINER_BUILD_CONTEXT}/rvstd-devel
+
+.PHONY: builder devel
