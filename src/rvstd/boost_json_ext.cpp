@@ -30,3 +30,19 @@ auto merge_patch(value& target, value const& patch) -> value&
 
 }  // namespace json
 }  // namespace boost
+
+namespace rvstd {
+
+template<>
+auto get_time(boost::json::value jv) -> timestamp
+{
+  return timestamp(jv.at("time").as_uint64());
+}
+
+template<>
+auto get_time(boost::json::object jo) -> timestamp
+{
+  return timestamp(jo.at("time").as_uint64());
+}
+
+}  // namespace rvstd
