@@ -17,22 +17,23 @@ project("rvstd"
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_FLAGS_COVERAGE "-O0 --coverage")
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type")
+set(Boost_USE_STATIC_LIBS ON)
 
 # Options
 option(ENABLE_TESTS "Enable building tests" ON)
 
 find_package(
-  Boost 1.82 COMPONENTS json REQUIRED
+  Boost 1.87 COMPONENTS json url REQUIRED
 )
 
 set(RVSTD_SOURCES
   "src/rvstd/boost_json_ext.cpp"
-  "src/rvstd/envsubst.cpp"
   "src/rvstd/unique_identifier.cpp"
   "src/rvstd/tableau.cpp"
   "src/rvstd/options.cpp"
@@ -40,28 +41,27 @@ set(RVSTD_SOURCES
 )
 
 # Static library
-add_library(rvstd STATIC ${RVSTD_SOURCES})
+add_library(rvstd STATIC ${RVSTD_SOURCES} ${RYTEST_SOURCES})
 target_include_directories(rvstd
   PUBLIC
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
 )
-target_link_libraries(rvstd PRIVATE Boost::json)
+target_link_libraries(rvstd PUBLIC Boost::json Boost::url)
 
 set_target_properties(rvstd PROPERTIES
   OUTPUT_NAME "rvstd"
   VERSION ${PROJECT_VERSION}
-  ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
 
 # Shared library
-add_library(rvstd-shared SHARED ${RVSTD_SOURCES})
+add_library(rvstd-shared SHARED ${RVSTD_SOURCES} ${RYTEST_SOURCES})
 target_include_directories(rvstd-shared
   PUBLIC
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
 )
-target_link_libraries(rvstd-shared PUBLIC Boost::json)
+target_link_libraries(rvstd-shared PUBLIC Boost::json Boost::url)
 set_target_properties(rvstd-shared PROPERTIES
   OUTPUT_NAME "rvstd"
   VERSION ${PROJECT_VERSION}
