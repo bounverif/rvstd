@@ -6,6 +6,7 @@ include(CTest)
 add_executable(
   rvstd_tests
     options.test.cpp
+    parser.test.cpp
     resource.test.cpp
     tableau.test.cpp
     unique_identifier.test.cpp
