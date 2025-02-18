@@ -1,46 +1,50 @@
-WORKSPACE = $(PWD)
-BUILD_DIRECTORY = /tmp/rvstd/build
+PROJECT_SOURCE_DIR := $(PWD)
+PROJECT_BUILD_DIR := /tmp/rvstd/build
+CMAKE_BUILD_TYPE := Release
 
 all: configure build test
 
-configure:
+set-project-dir:
+	$(eval PROJECT_SOURCE_DIR := $(patsubst %/,%, $(dir $(abspath $(lastword $(MAKEFILE_LIST))))))
+
+configure: set-project-dir
 	cmake \
-		-S $(WORKSPACE) \
-		-B $(BUILD_DIRECTORY) \
+		-S $(PROJECT_SOURCE_DIR) \
+		-B $(PROJECT_BUILD_DIR) \
 		-DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
 		-DENABLE_TESTS=ON
-	ln -sf $(BUILD_DIRECTORY)/compile_commands.json $(WORKSPACE)/compile_commands.json
+	ln -sf $(PROJECT_BUILD_DIR)/compile_commands.json $(PROJECT_SOURCE_DIR)/compile_commands.json
 
 build: configure
-	cmake --build $(BUILD_DIRECTORY)
+	cmake --build $(PROJECT_BUILD_DIR)
 
 purge:
-	rm -rf $(BUILD_DIRECTORY)
+	rm -rf $(PROJECT_BUILD_DIR)
 	$(MAKE) configure
 
 test: build
-	ctest --test-dir $(BUILD_DIRECTORY) --output-on-failure
+	ctest --test-dir $(PROJECT_BUILD_DIR) --output-on-failure
 
 install: build
-	cmake --install $(BUILD_DIRECTORY)
+	cmake --install $(PROJECT_BUILD_DIR)
 
 local_install: build
-	cmake --install $(BUILD_DIRECTORY) --prefix $(WORKSPACE)/locals
+	cmake --install $(PROJECT_BUILD_DIR) --prefix ~/.local
 
 benchmark: configure build
-	$(BUILD_DIRECTORY)/tests/rvstd_benchmarks
+	$(PROJECT_BUILD_DIR)/tests/rvstd_benchmarks
 
 coverage:
 	cmake \
-		-S $(WORKSPACE) \
-		-B $(BUILD_DIRECTORY) \
+		-S $(PROJECT_SOURCE_DIR) \
+		-B $(PROJECT_BUILD_DIR) \
 		-DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
 		-DCMAKE_BUILD_TYPE=COVERAGE \
-		-DENABLE_TESTS=ON
-	ln -sf $(BUILD_DIRECTORY)/compile_commands.json $(WORKSPACE)/compile_commands.json
-	cmake --build $(BUILD_DIRECTORY)
-	ctest --test-dir $(BUILD_DIRECTORY)
-	gcovr $(BUILD_DIRECTORY) -r $(WORKSPACE) -e $(WORKSPACE)/tests --print-summary
+		-DBUILD_TESTING=ON
+	ln -sf $(PROJECT_BUILD_DIR)/compile_commands.json $(PROJECT_SOURCE_DIR)/compile_commands.json
+	cmake --build $(PROJECT_BUILD_DIR)
+	ctest --test-dir $(PROJECT_BUILD_DIR)
+	gcovr $(PROJECT_BUILD_DIR) -r $(WORKSPACE) -e $(PROJECT_SOURCE_DIR)/tests --print-summary
 
 .PHONY: all configure build test benchmark coverage install local_install purge
